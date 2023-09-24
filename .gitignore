@@ -7,6 +7,8 @@ node_modules/
 # Editor/IDE specific files
 .vscode/
 .idea/
+# ignore json file
+package-lock.json
 
 # Logs
 logs/
