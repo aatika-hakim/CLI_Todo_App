@@ -1,6 +1,6 @@
 {
   "name": "atika-todo",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "",
   "main": "index.js",
   "type": "module",
@@ -8,12 +8,15 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "at-todo": "./index.js"
+    "at-todo": "index.js"
   },
-  "keywords": [],
+  "keywords": [
+    "todo-app"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "atika-todo": "^1.2.0",
     "inquirer": "^9.2.11"
   },
   "devDependencies": {

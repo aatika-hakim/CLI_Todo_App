@@ -1,4 +1,4 @@
-#! /user/bin/env node
+#! /usr/bin/env node
 import inquirer from "inquirer";
 let todo = [];
 let nextId = 1;
