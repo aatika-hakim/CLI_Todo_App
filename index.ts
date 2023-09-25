@@ -1,3 +1,5 @@
+#! /user/bin/env node
+
 import inquirer from "inquirer";
 
 interface Todo {
