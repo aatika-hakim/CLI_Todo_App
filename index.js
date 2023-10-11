@@ -1,5 +1,6 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
 import inquirer from "inquirer";
+import chalk from "chalk";
 let todo = [];
 let nextId = 1;
 async function main() {
@@ -8,11 +9,11 @@ async function main() {
             {
                 type: "list",
                 name: "action",
-                message: "Choose an action:",
+                message: chalk.green("Choose an action:"),
                 choices: ["Add task", "View tasks", "Update task", "Delete task", "Exit"],
             },
         ]);
-        switch (action) {
+        switch (action.action) {
             case "Add task":
                 await addTodo();
                 break;
@@ -26,7 +27,7 @@ async function main() {
                 await updateOrDeleteTodo("delete");
                 break;
             case "Exit":
-                console.log("Goodbye!");
+                console.log(chalk.magentaBright("Quit"));
                 return;
         }
     }
@@ -36,26 +37,26 @@ async function addTodo() {
         {
             type: "input",
             name: "task",
-            message: "Enter a new task:",
+            message: chalk.green("Enter a new task:"),
         },
     ]);
-    todo.push({ id: nextId++, task });
-    console.log(`Added task: ${task}`);
+    todo.push({ id: nextId++, task: task.task });
+    console.log(chalk.magentaBright(`Added task: ${task.task}`));
 }
 function viewTodos() {
     if (todo.length === 0) {
-        console.log("No todo found.");
+        console.log(chalk.red("No todo found."));
     }
     else {
-        console.log("Your Todo List:");
+        console.log(chalk.yellow("Your Todo Tasks List:"));
         todo.forEach(({ id, task }) => {
-            console.log(`${id}. ${task}`);
+            console.log(chalk.blue(`${id}. ${task}`));
         });
     }
 }
 async function updateOrDeleteTodo(action) {
     if (todo.length === 0) {
-        console.log(`No todo to ${action}.`);
+        console.log(chalk.red(`No todo to ${action}.`));
         return;
     }
     const { taskId } = await inquirer.prompt([
@@ -67,7 +68,7 @@ async function updateOrDeleteTodo(action) {
     ]);
     const todoIndex = todo.findIndex(({ id }) => id === taskId);
     if (todoIndex === -1) {
-        console.log(`Task ${taskId} not found.`);
+        console.log(chalk.red(`Task ${taskId} not found.`));
     }
     else {
         if (action === "update") {
@@ -75,15 +76,15 @@ async function updateOrDeleteTodo(action) {
                 {
                     type: "input",
                     name: "newTask",
-                    message: "Enter the new task description:",
+                    message: chalk.green("Enter the new task description:"),
                 },
             ]);
             todo[todoIndex].task = newTask;
-            console.log(`Updated task ${taskId}: ${newTask}`);
+            console.log(chalk.magentaBright(`Updated task ${taskId}: ${newTask}`));
         }
         else {
             const deletedTask = todo.splice(todoIndex, 1)[0];
-            console.log(`Deleted task ${taskId}: ${deletedTask.task}`);
+            console.log(chalk.magentaBright(`Deleted task ${taskId}: ${deletedTask.task}`));
         }
     }
 }
